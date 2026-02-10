@@ -1,0 +1,84 @@
+# This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs
+Project Name: Cricsports
+
+Goal:
+Build a full-stack cricket sports application similar to Cricbuzz that provides live scores, schedules, rankings, squads, and news.
+
+Core Features:
+1. Live Cricket Scores (ball-by-ball)
+2. Match Schedule (Today / Upcoming / Completed)
+3. Team Rankings (ICC – Test, ODI, T20)
+4. Team Squads & Player Profiles
+5. Live Commentary & Scorecard
+6. Cricket News & Updates
+7. Search (Teams, Players, Matches)
+8. Notifications for live matches
+9. Admin panel for content management
+
+Supported Formats:
+• Test
+• ODI
+• T20
+• T20 World Cup 2026
+
+Tech Stack:
+Frontend:
+- React / Next.js or Flutter (mobile)
+- Tailwind / Material UI
+
+Backend:
+- Node.js (Express) or Python (FastAPI)
+- REST API + WebSockets (live score updates)
+
+Database:
+- PostgreSQL / MongoDB
+
+Live Data Source:
+- Cricket API (CricAPI / SportsMonks / API-Sports)
+- WebSocket for real-time updates
+
+Architecture:
+- MVC / Clean Architecture
+- Modular API structure
+- Auth (JWT)
+- Caching (Redis) for live scores
+
+GitHub Requirements:
+- README.md (setup + screenshots)
+- Proper folder structure
+- Environment variable support
+- Docker support
+- CI/CD with GitHub Actions
+- API documentation (Swagger)
+
+Output:
+Generate full project structure, sample APIs, database schema, and frontend screens.
+name: Node.js CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [18.x, 20.x, 22.x]
+        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+    - run: npm ci
+    - run: npm run build --if-present
+    - run: npm test
